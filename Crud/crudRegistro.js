@@ -1,11 +1,9 @@
-// crud/Registro-usuarios
-
 const express = require('express');
 const { ObjectId } = require('mongodb');
-
+const saltRounds = 10; // Ajusta según tus necesidades para el hasheo de contraseña
+const bcrypt = require('bcrypt');
 
 const registroRouter= express.Router();
-
 
 registroRouter.get('/', async (req, res, next) => {
     const collection = req.db.collection("pregunta");
