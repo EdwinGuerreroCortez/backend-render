@@ -186,7 +186,7 @@
             next(error);
         }
     });
-    usuarioRouter.post('/logn', async (req, res) => {
+    usuarioRouter.post('/login', async (req, res) => {
         const { username, password } = req.body;
         const collection = req.db.collection("usuarios");
     
