@@ -1,22 +1,20 @@
 const mqtt = require('mqtt');
-let lastPotValue = 0;
-let lastTopic1Value = 0;
-let lastAguaValue = 0; 
-let lastPlatoAgua = 0; 
-let lastComida = 0; 
-let lastPlatoComida = 0; 
+let lastJsonValue1 = 0;
+let lastJsonValue2 = 0;
+let lastJsonValue3 = 0;
+let lastJsonValue4 = 0;
 
 const client = mqtt.connect('mqtt://broker.emqx.io', {
   port: 1883,
-  username: 'amiMascota',
+  username: 'Edwin',
   password: 'edwin123'
 });
 
 client.on('connect', () => {
   console.log('Conectado al broker MQTT.');
 
-  // Subscribe to the desired topic
-  const topics = ['amiMascota/potenciometro', 'amiMascota/agua', 'amiMascota/Platoagua','amiMascota/comida','amiMascota/PlatoComida']; // Add 'amiMascota/agua' to topics array
+  // Subscribe to the desired topics
+  const topics = ['topic1', 'topic2', 'topic3', 'topic4']; // Add topics array
   client.subscribe(topics, (err, granted) => {
     if (!err) {
       console.log('Subscribed to topics successfully:');
@@ -36,20 +34,17 @@ client.on('message', (topic, message) => {
 
       // Actualizar el valor correspondiente según el tópico
       switch (topic) {
-        case 'amiMascota/potenciometro':
-          lastPotValue = numericValue;
+        case 'topic1':
+          lastJsonValue1 = numericValue;
           break;
-        case 'amiMascota/agua':
-          lastAguaValue = numericValue; // Actualizar el valor de lastAguaValue con el valor del tema 'amiMascota/agua'
+        case 'topic2':
+          lastJsonValue2 = numericValue;
           break;
-        case 'amiMascota/Platoagua':
-          lastPlatoAgua = numericValue;
+        case 'topic3':
+          lastJsonValue3 = numericValue;
           break;
-        case 'amiMascota/comida':
-          lastComida = numericValue;
-          break;
-        case 'amiMascota/PlatoComida':
-          lastPlatoComida = numericValue;
+        case 'topic4':
+          lastJsonValue4 = numericValue;
           break;
         default:
           console.log('Mensaje recibido de un tópico no manejado:', topic);
@@ -59,11 +54,9 @@ client.on('message', (topic, message) => {
     }
   });
 
-const getLastPotValue = () => lastPotValue;
-const getLastTopic1Value = () => lastTopic1Value;
-const getLastAguaValue = () => lastAguaValue; // Nueva función para obtener el valor de lastAguaValue
-const getLastPlatoAguaValue = () =>lastPlatoAgua;
-const getLastComidaValue = () =>lastComida;
-const getLastPlatoComidaValue = () =>lastPlatoComida;
+const getLastJsonValue1 = () => lastJsonValue1;
+const getLastJsonValue2 = () => lastJsonValue2;
+const getLastJsonValue3 = () => lastJsonValue3;
+const getLastJsonValue4 = () => lastJsonValue4;
 
-module.exports = { client, getLastPotValue, getLastTopic1Value, getLastAguaValue,getLastPlatoAguaValue,getLastComidaValue,getLastPlatoComidaValue }; // Actualizado para incluir getLastAguaValue
+module.exports = { client, getLastJsonValue1, getLastJsonValue2, getLastJsonValue3, getLastJsonValue4 };
