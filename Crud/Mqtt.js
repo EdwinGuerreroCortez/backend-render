@@ -74,6 +74,5 @@ router.post('/activarRele', (req, res) => {
       res.status(500).json({ error: 'Un error ocurrió al intentar activar el motor.' });
   }
 });
-//HOLA MUNDODS
 
 module.exports = router;
