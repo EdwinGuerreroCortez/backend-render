@@ -59,6 +59,21 @@ router.post('/activarMotor', (req, res) => {
       res.status(500).json({ error: 'Un error ocurrió al intentar activar el motor.' });
   }
 });
+router.post('/activarRele', (req, res) => {
+  const { mensaje } = req.body; // Extrae el mensaje del cuerpo de la solicitud
+  if (!mensaje) {
+      return res.status(400).json({ error: 'Falta el mensaje en la solicitud.' });
+  }
+
+  try {
+      // Usa el mensaje proporcionado en la solicitud para enviar a través de MQTT
+      publishMessage('rele/control', mensaje);
+      res.json({ mensaje: `Comando '${mensaje}' enviado al motor.` });
+  } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Un error ocurrió al intentar activar el motor.' });
+  }
+});
 
 
 module.exports = router;
