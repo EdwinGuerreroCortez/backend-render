@@ -38,15 +38,15 @@ faqsDispensadora.post('/', async (req, res) => {
     try {
       const result = await collection.insertOne(newDispensador);
       if (result.insertedCount === 1) {
-        // Convertir ObjectId a String
-        const insertedId = result.insertedId.toString();
-        res.status(201).json({ message: "Dispensadora creada correctamente", id: insertedId });
+        const insertedId = result.insertedId.toString(); // Convertir ObjectId a String
+        return res.status(201).json({ message: "Dispensadora creada correctamente", id: insertedId });
       } else {
-        res.status(500).json({ message: "Error al crear la dispensadora" });
+        // Este camino idealmente nunca debería ocurrir ya que insertOne lanzará un error si falla
+        return res.status(500).json({ message: "Error al crear la dispensadora" });
       }
     } catch (error) {
       console.error('Error al crear la dispensadora:', error);
-      res.status(500).json({ message: "Error interno del servidor" });
+      return res.status(500).json({ message: "Error interno del servidor" });
     }
 });
 
