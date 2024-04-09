@@ -38,16 +38,18 @@ faqsDispensadora.post('/', async (req, res) => {
     try {
       const result = await collection.insertOne(newDispensador);
       if (result.insertedCount === 1) {
-        res.status(201).json({ message: "Dispensadora creada correctamente", id: result.insertedId });
+        // Convertir ObjectId a String
+        const insertedId = result.insertedId.toString();
+        res.status(201).json({ message: "Dispensadora creada correctamente", id: insertedId });
       } else {
-        // Si por alguna razón la inserción no fue exitosa, pero no hubo una excepción
         res.status(500).json({ message: "Error al crear la dispensadora" });
       }
     } catch (error) {
       console.error('Error al crear la dispensadora:', error);
       res.status(500).json({ message: "Error interno del servidor" });
     }
-  });
+});
+
   
 faqsDispensadora.get('/no-asignados', async (req, res, next) => {
     const collection = req.db.collection("dispensadoras");
