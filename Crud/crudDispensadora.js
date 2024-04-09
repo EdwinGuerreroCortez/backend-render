@@ -30,6 +30,25 @@ faqsDispensadora.put('/:id', async (req, res, next) => {
         return res.status(500).json({ message: "Error interno del servidor" });
     }
 });
+// Endpoint para crear una nueva dispensadora
+faqsDispensadora.post('/', async (req, res, next) => {
+    const collection = req.db.collection("dispensadoras");
+    const newDispensador = req.body;
 
-//sadddsjh
+    try {
+        // Insertar la nueva dispensadora en la base de datos
+        const result = await collection.insertOne(newDispensador);
+
+        // Verificar si la inserción fue exitosa
+        if (result.insertedCount === 1) {
+            return res.status(201).json({ message: "Dispensadora creada correctamente", id: result.insertedId });
+        } else {
+            return res.status(500).json({ message: "Error al crear la dispensadora" });
+        }
+    } catch (error) {
+        console.error('Error al crear la dispensadora:', error);
+        return res.status(500).json({ message: "Error interno del servidor" });
+    }
+});
+
 module.exports = faqsDispensadora;
