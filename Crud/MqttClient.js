@@ -7,8 +7,8 @@ let lastJsonValue4 = 0;
 
 const client = mqtt.connect('mqtt://broker.emqx.io', {
   port: 1883,
-  username: 'Edwin',
-  password: 'edwin123'
+  username: 'Edwin2',
+  password: 'edwin1234'
 });
 
 client.on('connect', () => {
