@@ -50,5 +50,15 @@ faqsDispensadora.post('/', async (req, res, next) => {
         return res.status(500).json({ message: "Error interno del servidor" });
     }
 });
+faqsDispensadora.get('/no-asignados', async (req, res, next) => {
+    const collection = req.db.collection("dispensadoras");
+    try {
+        const dispositivosNoAsignados = await collection.find({ assignedTo: null }).toArray();
+        res.json(dispositivosNoAsignados);
+    } catch (error) {
+        next(error);
+    }
+});
+
 
 module.exports = faqsDispensadora;
