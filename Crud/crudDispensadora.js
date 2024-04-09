@@ -31,25 +31,24 @@ faqsDispensadora.put('/:id', async (req, res, next) => {
     }
 });
 // Endpoint para crear una nueva dispensadora
-faqsDispensadora.post('/', async (req, res, next) => {
+faqsDispensadora.post('/', async (req, res) => {
     const collection = req.db.collection("dispensadoras");
     const newDispensador = req.body;
-
+  
     try {
-        // Insertar la nueva dispensadora en la base de datos
-        const result = await collection.insertOne(newDispensador);
-
-        // Verificar si la inserción fue exitosa
-        if (result.insertedCount === 1) {
-            return res.status(201).json({ message: "Dispensadora creada correctamente", id: result.insertedId });
-        } else {
-            return res.status(500).json({ message: "Error al crear la dispensadora" });
-        }
+      const result = await collection.insertOne(newDispensador);
+      if (result.insertedCount === 1) {
+        res.status(201).json({ message: "Dispensadora creada correctamente", id: result.insertedId });
+      } else {
+        // Si por alguna razón la inserción no fue exitosa, pero no hubo una excepción
+        res.status(500).json({ message: "Error al crear la dispensadora" });
+      }
     } catch (error) {
-        console.error('Error al crear la dispensadora:', error);
-        return res.status(500).json({ message: "Error interno del servidor" });
+      console.error('Error al crear la dispensadora:', error);
+      res.status(500).json({ message: "Error interno del servidor" });
     }
-});
+  });
+  
 faqsDispensadora.get('/no-asignados', async (req, res, next) => {
     const collection = req.db.collection("dispensadoras");
     try {
