@@ -3,7 +3,7 @@ const express = require('express');
 
 const faqsDispensadora = express.Router();
 
-// Endpoint para actualizar un documento específico ADA
+// Endpoint para actualizar un documento específico ADAgdfdd
 faqsDispensadora.put('/:id', async (req, res, next) => {
     const collection = req.db.collection("dispensadoras");
     const dispensadorId = req.params.id;
